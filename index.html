@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glasson</title>
+    <script type="module" crossorigin src="https://glasson.sk-global.biz/owndays/glasson-configurator.js"></script>
+    <script type="module" defer crossorigin src="https://glasson.sk-global.biz/owndays/glasson-lens-filter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <div class="w-full h-screen bg-gray-100">
+        <!-- Virtual Fitting -->
+        <div>
+            <glasson-configurator></glasson-configurator>
+        </div>
+
+        <!-- Lens Filter -->
+        <!-- <glasson-lens-filter></glasson-lens-filter> -->
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const inputVariant = {
+            skuId: '11485',
+        };
+        const demo = true;
+
+        const mode = 'try_on';
+        const showSwitchMode = false;
+        const forceRefresh = false;
+        const hide = false;
+        const newCore = true;
+
+        // Virtual Fitting
+        const glassonComponent = document.querySelector('glasson-configurator');
+        glassonComponent.setAttribute('inputVariant', JSON.stringify(inputVariant));
+        glassonComponent.setAttribute('demo', demo);
+        glassonComponent.setAttribute('mode', mode);
+        glassonComponent.setAttribute('hide', hide);
+        glassonComponent.setAttribute('newCore', newCore);
+        glassonComponent.setAttribute('showSwitchMode', showSwitchMode);
+        glassonComponent.setAttribute('forceRefresh', forceRefresh);
+
+        // Lens Filter
+        // const inputVariantLensFilter = {
+        //     skuId: liffState.get('g') || '11485',
+        //     lensColor: '90',
+        //     transparent: 50,
+        // };
+        // const glassonLensFilterComponent = document.querySelector('glasson-lens-filter');
+        // glassonLensFilterComponent.setAttribute('inputvariant', JSON.stringify(inputVariantLensFilter));
+        // glassonLensFilterComponent.setAttribute('mode', mode);
+        // glassonLensFilterComponent.setAttribute('demo', demo);
+        // glassonLensFilterComponent.setAttribute('hide', hide);
+        // glassonLensFilterComponent.setAttribute('newCore', newCore);
+        // glassonLensFilterComponent.setAttribute('showSwitchMode', showSwitchMode);
+        // glassonLensFilterComponent.setAttribute('forceRefresh', forceRefresh);
+    </script>
+</body>
+
+</html>
