@@ -57,6 +57,25 @@
         // glassonLensFilterComponent.setAttribute('newCore', newCore);
         // glassonLensFilterComponent.setAttribute('showSwitchMode', showSwitchMode);
         // glassonLensFilterComponent.setAttribute('forceRefresh', forceRefresh);
+
+        let hasRequestedCamera = false
+
+        async function handleCamera() {
+            hasRequestedCamera = true
+
+            try {
+                await navigator.mediaDevices.getUserMedia({ video: true })
+                console.log('Camera access granted');
+            } catch (err) {
+                console.log('Camera access denied');
+                if (err.name === 'NotAllowedError') {
+                    if (hasRequestedCamera) {
+                        // 👉 น่าจะเป็น user กด deny ครั้งนี้
+                        console.log('User denied camera access');
+                    }
+                }
+            }
+        }
     </script>
 </body>
 
