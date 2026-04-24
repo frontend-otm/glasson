@@ -21,6 +21,22 @@
         <!-- <glasson-lens-filter></glasson-lens-filter> -->
     </div>
     <script>
+        async function requestCameraPermission() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                stream.getTracks().forEach(track => track.stop());
+                return { granted: true };
+            } catch (error) {
+                if (error.name === 'NotAllowedError') {
+                    return { granted: false, reason: 'denied' };
+                }
+                if (error.name === 'NotFoundError') {
+                    return { granted: false, reason: 'no_device' };
+                }
+                return { granted: false, reason: 'error', error };
+            }
+        }
+
         const params = new URLSearchParams(window.location.search);
         const inputVariant = {
             skuId: '11485',
@@ -57,25 +73,6 @@
         // glassonLensFilterComponent.setAttribute('newCore', newCore);
         // glassonLensFilterComponent.setAttribute('showSwitchMode', showSwitchMode);
         // glassonLensFilterComponent.setAttribute('forceRefresh', forceRefresh);
-
-        let hasRequestedCamera = false
-
-        async function handleCamera() {
-            hasRequestedCamera = true
-
-            try {
-                await navigator.mediaDevices.getUserMedia({ video: true })
-                console.log('Camera access granted');
-            } catch (err) {
-                console.log('Camera access denied');
-                if (err.name === 'NotAllowedError') {
-                    if (hasRequestedCamera) {
-                        // 👉 น่าจะเป็น user กด deny ครั้งนี้
-                        console.log('User denied camera access');
-                    }
-                }
-            }
-        }
     </script>
 </body>
 
