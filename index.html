@@ -21,21 +21,24 @@
         <!-- <glasson-lens-filter></glasson-lens-filter> -->
     </div>
     <script>
-        async function requestCameraPermission() {
+        async function recordVideo() {
+            // ✅ ดัก error กรณีผู้ใช้ปฏิเสธหรือไม่มีอุปกรณ์
+            let stream;
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                stream.getTracks().forEach(track => track.stop());
-                return { granted: true };
-            } catch (error) {
-                if (error.name === 'NotAllowedError') {
-                    return { granted: false, reason: 'denied' };
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            } catch (err) {
+                if (err.name === "NotAllowedError") {
+                    alert("❌ กรุณาอนุญาตการเข้าถึงกล้องและไมโครโฟน");
+                } else if (err.name === "NotFoundError") {
+                    alert("❌ ไม่พบกล้องหรือไมโครโฟนในอุปกรณ์นี้");
+                } else {
+                    alert("❌ เกิดข้อผิดพลาด: " + err.message);
                 }
-                if (error.name === 'NotFoundError') {
-                    return { granted: false, reason: 'no_device' };
-                }
-                return { granted: false, reason: 'error', error };
+                return; // หยุดการทำงานถ้าเกิด error
             }
         }
+
+        recordVideo();
 
         const params = new URLSearchParams(window.location.search);
         const inputVariant = {
