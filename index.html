@@ -21,24 +21,6 @@
         <!-- <glasson-lens-filter></glasson-lens-filter> -->
     </div>
     <script>
-        async function recordVideo() {
-            // ✅ ดัก error กรณีผู้ใช้ปฏิเสธหรือไม่มีอุปกรณ์
-            let stream;
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            } catch (err) {
-                if (err.name === "NotAllowedError") {
-                    alert("❌ กรุณาอนุญาตการเข้าถึงกล้องและไมโครโฟน");
-                } else if (err.name === "NotFoundError") {
-                    alert("❌ ไม่พบกล้องหรือไมโครโฟนในอุปกรณ์นี้");
-                } else {
-                    alert("❌ เกิดข้อผิดพลาด: " + err.message);
-                }
-                return; // หยุดการทำงานถ้าเกิด error
-            }
-        }
-
-        recordVideo();
 
         const params = new URLSearchParams(window.location.search);
         const inputVariant = {
@@ -76,6 +58,24 @@
         // glassonLensFilterComponent.setAttribute('newCore', newCore);
         // glassonLensFilterComponent.setAttribute('showSwitchMode', showSwitchMode);
         // glassonLensFilterComponent.setAttribute('forceRefresh', forceRefresh);
+
+        async function recordVideo() {
+            let stream;
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                console.log(stream);
+            } catch (err) {
+                if (err.name === "NotAllowedError") {
+                    console.log("❌ กรุณาอนุญาตการเข้าถึงกล้องและไมโครโฟน");
+                } else if (err.name === "NotFoundError") {
+                    console.log("❌ ไม่พบกล้องหรือไมโครโฟนในอุปกรณ์นี้");
+                } else {
+                    console.log("❌ เกิดข้อผิดพลาด: " + err.message);
+                }
+                return;
+            }
+        }
+        recordVideo();
     </script>
 </body>
 
